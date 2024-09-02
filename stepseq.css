@@ -1,0 +1,85 @@
+#sequencer {
+    display: grid;
+    grid-template-columns: repeat(16, 50px);
+    grid-template-rows: repeat(8,25px);
+    gap: 20px;
+}
+
+.cell {
+    width: 60px;
+    height: 40px;
+    background:radial-gradient(white 5%, #17d2d2 95%);
+    cursor: pointer;
+    border: 1px solid #8c8a8a;
+    border-radius: 5%;
+}
+.timer{
+    width: 10px;
+    height: 10px;
+    background: black;
+    border: orangered;
+    border-radius: 50%;
+
+}
+@keyframes time {
+    0%{
+        background: black;
+        box-shadow: 0 0 0 0 black;
+    }
+    100%{
+        background: red;
+        box-shadow: 0 0 10px 0 orangered;
+    }
+}
+.oddcell{
+    width: 60px;
+    height: 40px;
+    background:radial-gradient(white 5%, #b6b2b2 95%);
+    cursor: pointer;
+    border: 1px solid #8c8a8a;
+    border-radius: 10%;
+}
+
+.cell.active {
+    animation: animatecell 0.5s infinite ease-in-out;
+}
+.cell.stop{
+    background: red;
+    box-shadow: 0 0 30px 0 orangered;
+    border: red;
+}
+@keyframes  animatecell{
+    0%,100%{
+        background:radial-gradient(white 5%, orange 95%);
+        box-shadow: 0 0 20px 0px orange;
+    }
+    50%{
+        background:radial-gradient(white 5%, yellow 95%);
+        box-shadow: 0 0 20px 0px yellow;
+    }
+}
+.shade{
+    background: linear-gradient(180deg, #595858,black);
+}
+.sqknob1, .sqknob2, .sqknob3, .sqknob4 {
+    width: 80px;
+    height: 80px;
+    background-color: black;
+    border-radius: 50%;
+    position: relative;
+    transform: rotate(0deg);
+    border: solid 1px red;
+    box-shadow: 0 0 20px #f60808;
+}
+
+.sqknob:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 10px;
+    height:30px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+}

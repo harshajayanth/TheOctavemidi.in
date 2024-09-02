@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIDI</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.8.22/build/Tone.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="js/bootstrap.js">
+    <link rel="stylesheet" href="midi.css">
+    <link rel="stylesheet" href="stepseq.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body class="stylo">
+
+
+<div id="midi" class="align-items-center d-flex justify-content-center text-center bg-dark">
+    <!--Midi Failure-->
+    <div id="midifailure" class="jumbotron black rounded border border-danger text-center" style="width: 60%">
+        <h1 class="text-danger">No Midi device Found</h1>
+    </div>
+    <!--Midi success-->
+    <div id="midisuccess">
+        <button class="btn black btn-lg text-success font-weight-bold" id="start">START</button>
+    </div>
+</div>
+
+
+<!--Midi control-->
+<div class="container-fluid" id="midicontrol">
+    <div class="row">
+        <div class="col-8">
+            <div class="jumbotron black mt-4">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img id="img" src="images/midi.png">
+                        <h2 id="deviceName" class="text-white mt-2"></h2>
+                    </div>
+                    <div class="col-8 align-items-center">
+                        <div class="container txt">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="knob1 knob"></div>
+                                    <p id="feedbacklevel">0.0</p>
+                                    <h6 class="ml-3 text-white font-weight-bold">FEEDBACK</h6>
+                                </div>
+                                <div class="col-3">
+                                    <div class="knob2 knob"></div>
+                                    <p id="panlevel">0.0</p>
+                                    <h6 class="ml-3 text-white font-weight-bold">PAN</h6>
+                                </div>
+                                <div class="col-3">
+                                    <div class="knob3 knob"></div>
+                                    <p id="reverblevel">0.0</p>
+                                    <h6 class="ml-3 text-white font-weight-bold">REVERB</h6>
+                                </div>
+                                <div class="col-3">
+                                    <div class="knob4 knob"></div>
+                                    <p id="delaylevel">0.0</p>
+                                    <h6 class="ml-3 text-white font-weight-bold">DELAY</h6>
+                                </div>
+                            </div>
+                            <div class="row mt-5 text-center text-danger form-group">
+                                <div id="dp"
+                                     class="col-6 border border-danger rounded h3 group-css  align-items-center d-flex justify-content-center text-uppercase"
+                                     style="height: 50px">Drum Pad
+                                </div>
+                                <div id="ss"
+                                     class="col-6 border border-danger rounded h3  align-items-center d-flex justify-content-center text-uppercase">
+                                    Step Sequencer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="container mt-4">
+                <div class="row mb-2 btn-group col-12">
+                    <button class="btn text-black font-weight-bold text-uppercase bg-white" id="piano">Piano</button>
+                    <button class="btn text-white font-weight-bold text-uppercase bg-dark" id="guitar">Guitar</button>
+                </div>
+                <div class="row btn-group col-12">
+                    <button class="btn text-white font-weight-bold text-uppercase bg-dark" id="strings">Strings</button>
+                    <button class="btn text-white font-weight-bold text-uppercase bg-dark" id="synth">Synth</button>
+                </div>
+                <div class="row">
+                    <div class="container-fluid row mt-3">
+                        <div class="col-4">
+                            <div class="sound rounded pt-5">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="col-8 bg-dark">
+                            <div class="piano">
+                                <!-- White keys -->
+                                <div class="key white-key" data-key="C" data-raag="స"></div>
+                                <div class="key black-key" data-key="C#" data-raag="స#"></div>
+                                <div class="key white-key" data-key="D" data-raag="రి"></div>
+                                <div class="key black-key" data-key="D#" data-raag="రి#"></div>
+                                <div class="key white-key" data-key="E" data-raag="గ"></div>
+                                <div class="key white-key" data-key="F" data-raag="మ"></div>
+                                <div class="key black-key" data-key="F#" data-raag="మ#"></div>
+                                <div class="key white-key" data-key="G" data-raag="ప"></div>
+                                <div class="key black-key" data-key="G#" data-raag="ప#"></div>
+                                <div class="key white-key" data-key="A" data-raag="ద"></div>
+                                <div class="key black-key" data-key="A#" data-raag="ద#"></div>
+                                <div class="key white-key" data-key="B" data-raag="ని"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center row mt-3 bg-dark border border-success rounded"
+                     style="height: 100px">
+                    <h1 style="color: #68d3a4" id="noteName" class="pt-4">MIDI NOTE</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-4">
+        <div id="DrumPadsection" class="row">
+            <!--Effects-->
+            <div class="col-3">
+                <div id="FX" class="border rounded text-center position-relative">
+                    <h2 id="fxname" class="text-center text-white mt-2"></h2>
+                    <hr>
+                    <div id="Reverbanimate">
+                        <div class="reverbcircle1"></div>
+                        <div class="reverbcircle2"></div>
+                        <div class="reverbcircle3"></div>
+                        <div class="reverbcircle4"></div>
+                        <div class="reverbcircle5"></div>
+                    </div>
+                    <div id="delayanimate" class="mt-4">
+                        <div class="child-circle child-circle1"></div>
+                        <div class="child-circle child-circle2"></div>
+                        <div class="child-circle child-circle3"></div>
+                        <div class="child-circle child-circle4"></div>
+                        <div class="child-circle child-circle5"></div>
+                        <div class="child-circle child-circle6"></div>
+                        <div class="child-circle child-circle7"></div>
+                    </div>
+                    <div id="pananimate" class="bg-danger">
+                        <div class="pulsefdb">
+                            <span style="--i:0;"></span>
+                            <span style="--i:1;"></span>
+                            <span style="--i:2;"></span>
+                            <span style="--i:3;"></span>
+                        </div>
+                    </div>
+                    <div id="fdbanimate">
+                        <div class="cone"></div>
+                        <div class="line"></div>
+                        <div class="wave wave1"></div>
+                        <div class="wave wave2"></div>
+                        <div class="wave wave3"></div>
+                        <div class="wave wave4"></div>
+                        <div class="wave wave5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-9">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!--Pads-->
+                        <div class="col-4">
+                            <div id="pads" class="border border-danger rounded text-center">
+                                <div class="container">
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <div class="pad" id="pad1"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad2"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad3"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad4"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <div class="pad" id="pad5"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad6"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad7"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad8"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <div class="pad" id="pad9"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad10"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad11"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad12"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <div class="pad" id="pad13"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad14"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad15"></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="pad" id="pad16"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Program Change-->
+                        <div class="col-4">
+                            <div id="pc" class="border border-warning rounded black text-center">
+                                <!--Padname-->
+                                <div class="container">
+                                    <div class="row d-flex justify-content-center pt-4">
+                                        <img id="programimg" src="audio/Hiphop1/kit.jpg" width="300" height="200">
+                                    </div>
+                                    <div class="row  d-flex justify-content-center">
+                                        <h1 class="h1 text-warning text-uppercase font-weight-bold" id="padname"></h1>
+                                    </div>
+                                    <!--Programname-->
+                                    <div class="row align-items-center d-flex justify-content-center pt-4">
+                                        <select id="programname"
+                                                class="form-control form-control-lg col-6 black text-center txt">
+                                            <option value="HipHop1" selected>Abstract HipHop</option>
+                                            <option value="HipHop2">Atlanta HipHop</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!---Loop Controller-->
+                        <div class="col-4">
+                            <div class="jumbotron loop container-fluid border-success border black d-flex justify-content-center align-items-center"
+                                 style="width: 480px;height: 400px">
+
+                                <select class="form-control-lg form-control black text-white font-weight-bold text-center" id="loopname">
+                                    <option value="bass" selected>Bass 120</option>
+                                    <option value="bass2">Thump 120</option>
+                                </select>
+                                <div id="loopgrid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="StepSequencersection" class="row">
+            <div class="col-8">
+                <div class="jumbotron border-danger border shadow black d-flex justify-content-center align-items-center"
+                     style="height: 600px">
+                    <div id="sequencer"></div>
+                </div>
+            </div>
+            <div class="col-4">
+                <!--Settings-->
+                <div id="sequencersettings"
+                     class="jumbotron border-danger border shadow shade d-flex justify-content-center align-items-center">
+                    <div>
+                        <input type="number" minlength="2" maxlength="3" value="120" id="bpm"
+                               class="form-control text-uppercase font-weight-bold form-control-lg border border-success black text-center"
+                               placeholder="BPM">
+                        <select id="plugin"
+                                class="mt-2 form-control text-uppercase font-weight-bold form-control-lg black border border-success text-center">
+                            <option value="HipHop1" selected>HipHop1</option>
+                            <option value="HipHop2">HipHop2</option>
+                        </select>
+                        <div class="container mt-3 d-flex justify-content-center align-items-center">
+                            <div class="col-4">
+                                <button id="clear" class="btn btn-warning">CLEAR</button>
+                            </div>
+                            <div class="col-4">
+                                <button id="play" class="btn btn-success">PLAY</button>
+                            </div>
+                            <div class="col-4">
+                                <button id="stop" class="btn btn-danger">STOP</button>
+                            </div>
+                        </div>
+                        <select id="filtermode"
+                                class="mt-4 form-control text-uppercase font-weight-bold form-control-lg black border border-success text-center">
+                            <option value="lowpass" selected>LowPass</option>
+                            <option value="highpass">HighPass</option>
+                            <option value="bandpass">BandPass</option>
+                            <option value="allpass">AllPass</option>
+                            <option value="lowshelf">LowShelf</option>
+                            <option value="highshelf">HighShelf</option>
+                            <option value="notch">Notch</option>
+                            <option value="peaking">Peaking</option>
+                        </select>
+                    </div>
+                </div>
+                <!--//Sequencer FX-->
+                <div id="sequencerfx"
+                     class="jumbotron border-danger border shadow black d-flex justify-content-center align-items-center"
+                     style="height: 180px">
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-2">
+                                <div class="sqknob sqknob1"></div>
+                            </div>
+                            <div class="col-2 text-center ml-4">
+                                <div class="sqknob sqknob2"></div>
+                            </div>
+                            <div class="col-2 text-center ml-4">
+                                <div class="sqknob sqknob3"></div>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="sqknob sqknob4 ml-4"></div>
+                            </div>
+                        </div>
+                        <div class="row pt-3 d-flex justify-content-center align-items-center text-warning">
+                            <h3 id="effectlevel"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="application/javascript" src="js/midi.js"></script>
+<script type="application/javascript" src="js/stepsq.js"></script>
+</html>
