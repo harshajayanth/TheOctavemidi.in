@@ -1,0 +1,71 @@
+{
+  "name": "midi.in",
+  "version": "1.0.0",
+
+  "Beat": [
+    {
+      "pad": 20,
+      "audio": "pad1.wav"
+    },
+    {
+      "pad": 21,
+      "audio": "pad2.wav"
+    },
+    {
+      "pad": 22,
+      "audio": "pad3.wav"
+    },
+    {
+      "pad": 23,
+      "audio": "pad4.wav"
+    },
+    {
+      "pad": 16,
+      "audio": "pad5.wav"
+    },
+    {
+      "pad": 17,
+      "audio": "pad6.wav"
+    },
+    {
+      "pad": 18,
+      "audio": "pad7.wav"
+    },
+    {
+      "pad": 19,
+      "audio": "pad8.wav"
+    },
+    {
+      "pad": 28,
+      "audio": "pad9.wav"
+    },
+    {
+      "pad": 29,
+      "audio": "pad10.wav"
+    },
+    {
+      "pad": 30,
+      "audio": "pad11.wav"
+    },
+    {
+      "pad": 31,
+      "audio": "pad12.wav"
+    },
+    {
+      "pad": 24,
+      "audio": "pad13.wav"
+    },
+    {
+      "pad": 25,
+      "audio": "pad14.wav"
+    },
+    {
+      "pad": 26,
+      "audio": "pad15.wav"
+    },
+    {
+      "pad": 27,
+      "audio": "pad16.wav"
+    }
+  ]
+}
